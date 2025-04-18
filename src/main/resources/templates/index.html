@@ -84,8 +84,11 @@
                 
                 <!-- Filtros y Búsqueda -->
                 <div class="mb-4 flex flex-col sm:flex-row gap-3">
-                    <input type="text" placeholder="Buscar por nombre..." class="flex-grow px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500">
-                    <select class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500">
+                    <input type="text" id="filtroNombre" placeholder="Buscar por nombre..." 
+                           class="flex-grow px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
+                           oninput="filtrarPlantas()">
+                    <select id="filtroTipo" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
+                            onchange="filtrarPlantas()">
                         <option value="">Todos los tipos</option>
                         <option th:each="tipo : ${tiposPlanta}" th:value="${tipo}" th:text="${tipo}"></option>
                     </select>
@@ -138,4 +141,25 @@
         </div>
     </div>
 </body>
+<script>
+    function filtrarPlantas() {
+        const filtroNombre = document.getElementById('filtroNombre').value.toLowerCase();
+        const filtroTipo = document.getElementById('filtroTipo').value;
+        const filas = document.querySelectorAll('tbody tr:not([th\\:if])'); // Excluye la fila de "no hay plantas"
+        
+        filas.forEach(fila => {
+            const nombre = fila.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            const tipo = fila.querySelector('td:first-child span').textContent;
+            
+            const coincideNombre = nombre.includes(filtroNombre);
+            const coincideTipo = !filtroTipo || tipo === filtroTipo;
+            
+            if (coincideNombre && coincideTipo) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        });
+    }
+</script>
 </html>
