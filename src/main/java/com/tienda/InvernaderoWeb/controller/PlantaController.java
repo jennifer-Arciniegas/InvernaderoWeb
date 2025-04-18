@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.List;
-@RestController
+/**@RestController
 public class IndexController {
 
     @RequestMapping("/")
     public String defaultPath(){
         return "Hello World!";
     }
+**/
 @Controller
 
 @RequestMapping("/plantas")
@@ -106,5 +107,4 @@ public class PlantaController {
             default -> throw new IllegalArgumentException("Tipo de planta no válido: " + plantaDTO.getTipo());
         };
     }
-}
 }
