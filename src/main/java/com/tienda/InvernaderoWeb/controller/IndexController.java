@@ -8,8 +8,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
+@RestController
+public class IndexController {
+
+    @RequestMapping("/")
+    public String defaultPath(){
+        return "Hello World!";
+    }
 @Controller
 
 @RequestMapping("/plantas")
@@ -96,4 +106,5 @@ public class PlantaController {
             default -> throw new IllegalArgumentException("Tipo de planta no válido: " + plantaDTO.getTipo());
         };
     }
+}
 }
