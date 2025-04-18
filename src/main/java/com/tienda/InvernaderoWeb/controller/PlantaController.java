@@ -32,7 +32,7 @@ public class PlantaController {
         model.addAttribute("tiposPlanta", tiposPlanta); // Para el select del formulario
         model.addAttribute("plantaDTO", new PlantaDTO()); // DTO vacío para el formulario
         model.addAttribute("plantas", plantaService.obtenerTodasLasPlantas()); // Lista de plantas para la tabla
-        return "index"; // Renderiza el template index.html
+        return "index.html"; // Renderiza el template index.html
     }
 
     /**
