@@ -25,7 +25,7 @@ public class Rosa extends Planta {
     // Implementación del cálculo de precio para rosas (precio base sin modificación)
     @Override
     public double calcularPrecioVenta() {
-        return this.precioBase; // Rosas se venden al precio base
+        return this.precioBase * 1.20; // Rosas se venden al precio base
     }
 
     // Devuelve el tipo específico de planta

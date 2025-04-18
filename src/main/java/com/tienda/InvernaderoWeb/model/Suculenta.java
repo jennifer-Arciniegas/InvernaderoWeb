@@ -25,7 +25,7 @@ public class Suculenta extends Planta {
     // Implementación del cálculo de precio para cactus (30% más caro)
     @Override
     public double calcularPrecioVenta() {
-        return this.precioBase * 1.3;
+        return this.precioBase * 1.10;
     }
 
     // Devuelve el tipo específico de planta
