@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+@Controller
 
 @RequestMapping("/plantas")
 public class PlantaController {
@@ -25,6 +26,10 @@ public class PlantaController {
     /**
      * Muestra la página principal con formulario e inventario
      */
+    @GetMapping("/")
+    public String mostrarIndex() {
+        return "index"; // Esto buscará index.html en templates/
+    }
     @GetMapping
     public String mostrarPaginaPrincipal(Model model) {
         // Agrega los datos necesarios para la vista
