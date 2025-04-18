@@ -24,7 +24,7 @@ Para poder ejecutar este proyecto necesitas tener instalado:
 
 ```bash
 git clone https://github.com/jennifer-Arciniegas/InvernaderoWeb.git
-
+```
 ## 🛠️ Abrir en IntelliJ
 - Una ves clonado el repositorio abrir la carpeta **InvernaderoWeb **
 - Abrir con IntelliJ el archivo: **pom**
