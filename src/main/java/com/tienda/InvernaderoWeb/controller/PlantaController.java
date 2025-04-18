@@ -8,21 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 
 import java.util.List;
-/**@RestController
-public class IndexController {
 
-    @RequestMapping("/")
-    public String defaultPath(){
-        return "Hello World!";
-    }
-**/
 @Controller
-
 @RequestMapping("/plantas")
 public class PlantaController {
 
@@ -43,7 +32,7 @@ public class PlantaController {
         model.addAttribute("tiposPlanta", tiposPlanta); // Para el select del formulario
         model.addAttribute("plantaDTO", new PlantaDTO()); // DTO vacío para el formulario
         model.addAttribute("plantas", plantaService.obtenerTodasLasPlantas()); // Lista de plantas para la tabla
-        return "index.html"; // Renderiza el template index.html
+        return "index"; // Renderiza el template index.html
     }
 
     /**
