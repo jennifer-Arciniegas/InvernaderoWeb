@@ -1,5 +1,6 @@
 package com.tienda.InvernaderoWeb.controller;
 
+
 import com.tienda.InvernaderoWeb.dto.PlantaDTO;
 import com.tienda.InvernaderoWeb.model.*;
 import com.tienda.InvernaderoWeb.service.PlantaService;
@@ -15,8 +16,9 @@ import java.util.List;
 public class PlantaController {
 
     private final PlantaService plantaService;
-    private static final List<String> TIPOS_PLANTA = List.of("Cactus", "Rosa", "Orquidea", "Suculenta");
+    private final List<String> tiposPlanta = List.of("Cactus", "Rosa", "Orquidea", "Suculenta");
 
+    // Inyección de dependencias a través del constructor
     public PlantaController(PlantaService plantaService) {
         this.plantaService = plantaService;
     }
@@ -26,10 +28,11 @@ public class PlantaController {
      */
     @GetMapping
     public String mostrarPaginaPrincipal(Model model) {
-        model.addAttribute("tiposPlanta", TIPOS_PLANTA);
-        model.addAttribute("plantaDTO", new PlantaDTO());
-        model.addAttribute("plantas", plantaService.obtenerTodasLasPlantas());
-        return "index";
+        // Agrega los datos necesarios para la vista
+        model.addAttribute("tiposPlanta", tiposPlanta); // Para el select del formulario
+        model.addAttribute("plantaDTO", new PlantaDTO()); // DTO vacío para el formulario
+        model.addAttribute("plantas", plantaService.obtenerTodasLasPlantas()); // Lista de plantas para la tabla
+        return "index"; // Renderiza el template index.html
     }
 
     /**
@@ -37,22 +40,25 @@ public class PlantaController {
      */
     @PostMapping("/registrar")
     public String registrarPlanta(
-            @ModelAttribute PlantaDTO plantaDTO,
-            RedirectAttributes redirectAttrs) {
+            @ModelAttribute PlantaDTO plantaDTO, // Recibe los datos del formulario
+            RedirectAttributes redirectAttrs) { // Para enviar mensajes entre redirecciones
 
         try {
+            // Crea la planta específica según el tipo
             Planta planta = crearPlantaSegunTipo(plantaDTO);
+            // Guarda en la base de datos
             plantaService.guardarPlanta(planta);
+            // Mensaje de éxito
             redirectAttrs.addFlashAttribute("mensaje", "¡Planta registrada con éxito!");
-            redirectAttrs.addFlashAttribute("tipoMensaje", "success");
         } catch (IllegalArgumentException e) {
+            // Mensaje de error específico
             redirectAttrs.addFlashAttribute("mensaje", "Error: " + e.getMessage());
-            redirectAttrs.addFlashAttribute("tipoMensaje", "danger");
         } catch (Exception e) {
+            // Mensaje de error genérico
             redirectAttrs.addFlashAttribute("mensaje", "Error inesperado al registrar la planta");
-            redirectAttrs.addFlashAttribute("tipoMensaje", "danger");
         }
 
+        // Redirige a la página principal
         return "redirect:/plantas";
     }
 
@@ -63,26 +69,25 @@ public class PlantaController {
     public String eliminarPlanta(
             @PathVariable Long id,
             RedirectAttributes redirectAttrs) {
-
         try {
             plantaService.eliminarPlanta(id);
             redirectAttrs.addFlashAttribute("mensaje", "Planta eliminada correctamente");
-            redirectAttrs.addFlashAttribute("tipoMensaje", "success");
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("mensaje", "Error al eliminar la planta: " + e.getMessage());
-            redirectAttrs.addFlashAttribute("tipoMensaje", "danger");
         }
-        return "redirect:/plantas";
+        return "redirect:/plantas"; // Redirige para recargar la lista
     }
 
     /**
      * Método auxiliar para crear la planta específica según el tipo
      */
     private Planta crearPlantaSegunTipo(PlantaDTO plantaDTO) {
+        // Validación básica
         if (plantaDTO.getTipo() == null || plantaDTO.getTipo().isEmpty()) {
             throw new IllegalArgumentException("Debe seleccionar un tipo de planta");
         }
 
+        // Crea la instancia específica según el tipo
         return switch (plantaDTO.getTipo()) {
             case "Cactus" -> new Cactus(plantaDTO);
             case "Rosa" -> new Rosa(plantaDTO);
