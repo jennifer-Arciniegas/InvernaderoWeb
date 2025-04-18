@@ -67,17 +67,15 @@ public class PlantaController {
      */
     @PostMapping("/eliminar/{id}")
     public String eliminarPlanta(
-            @PathVariable Long id, // ID de la planta a eliminar
+            @PathVariable Long id,
             RedirectAttributes redirectAttrs) {
-
         try {
             plantaService.eliminarPlanta(id);
             redirectAttrs.addFlashAttribute("mensaje", "Planta eliminada correctamente");
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("mensaje", "Error al eliminar la planta: " + e.getMessage());
         }
-
-        return "redirect:/plantas";
+        return "redirect:/plantas"; // Redirige para recargar la lista
     }
 
     /**
