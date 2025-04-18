@@ -8,6 +8,6 @@ public class IndexController {
 
     @GetMapping("/")
     public String defaultPath() {
-        return "Hola mundo lindo ;)";
+        return "index.html";
     }
 }
